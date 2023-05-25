@@ -10,17 +10,25 @@ const Nav = () => {
     const isUserLoggedIn = true;
 
     const [providers, setProviders] = useState(null);
+    const [toggleDropdown, setToggleDropdown] = useState(false);
+    const [legend, setLegend] = useState('nah')
+
     useEffect(() => {
         (async () => {
             const res = await getProviders();
             setProviders(res);
         })();
-    }, [])
+    }, []);
+
+    const printer = () => {
+        console.log('yea')
+    }
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
         <Link href='/' className="flex gap-2 flex-center">
             <Image 
-                src='./assets/images/logo.svg'
+                src='/assets/images/logo.svg'
                 alt="Proomptopia Logo"
                 width={30}
                 height={30}
@@ -29,8 +37,8 @@ const Nav = () => {
             <p className="logo_text">Proomptopia</p>
         </Link>
 
-        {/* Mobile Navigation */}
-        <div className="sm:flex hidden">
+        {/* Desktop Navigation */}
+        <div className="sm:flex hidden bg-purple-300">
             {
                 isUserLoggedIn ? (
                     <div className="flex gap-3 md:gap-5">
@@ -64,8 +72,62 @@ const Nav = () => {
                 </>)
             }
         </div>
+        {/* Mobile Navigation */}
+        <div className="sm:hidden flex relative sm:bg-yellow-300 sm:p-10">
+            {
+                isUserLoggedIn ? (
+                    <div className="flex">
+                        <Image
+                                src='/assets/images/logo.svg'
+                                width={37}
+                                height={37}
+                                className="rounded-full"
+                                alt="profilesssss"
+                                onClick={() => setToggleDropdown(!toggleDropdown)}
+                            />
+
+                        {toggleDropdown && (
+                            <div className="dropdown">
+                                <Link 
+                                    href='/profile'
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDropdown(false)}
+                                >
+                                    My Profile
+                                </Link>    
+                            </div>
+                            
+                        )}
+                    </div>
+                ) : (
+                    <>
+                        {providers && Object.values(providers).map(provider => {
+                        return (<button
+                            type="button"
+                            key={provider.name}
+                            onClick={() => signIn(provider.id)}
+                            className="black_btn"
+                        >
+                            Sign In
+                        </button>)
+                    })}
+                    </>
+                )
+            }
+        </div>
     </nav>
   )
 }
 
 export default Nav
+
+// {providers && Object.values(providers).map(provider => {
+//     return (<button
+//         type="button"
+//         key={provider.name}
+//         onClick={() => signIn(provider.id)}
+//         className="black_btn"
+//     >
+//         Sign In
+//     </button>)
+// })}
