@@ -11,7 +11,6 @@ const Nav = () => {
 
     const [providers, setProviders] = useState(null);
     const [toggleDropdown, setToggleDropdown] = useState(false);
-    const [legend, setLegend] = useState('nah')
 
     useEffect(() => {
         (async () => {
@@ -19,10 +18,6 @@ const Nav = () => {
             setProviders(res);
         })();
     }, []);
-
-    const printer = () => {
-        console.log('yea')
-    }
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
