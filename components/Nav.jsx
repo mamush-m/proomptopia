@@ -19,6 +19,10 @@ const Nav = () => {
         })();
     }, []);
 
+    const disableToggle = () => {
+        setToggleDropdown(false);
+    }
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
         <Link href='/' className="flex gap-2 flex-center">
@@ -33,7 +37,7 @@ const Nav = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="sm:flex hidden bg-purple-300">
+        <div className="sm:flex hidden bg-purple-300 px-10 py-5 rounded-2xl">
             {
                 isUserLoggedIn ? (
                     <div className="flex gap-3 md:gap-5">
@@ -76,9 +80,9 @@ const Nav = () => {
                                 src='/assets/images/logo.svg'
                                 width={37}
                                 height={37}
-                                className="rounded-full"
-                                alt="profilesssss"
-                                onClick={() => setToggleDropdown(!toggleDropdown)}
+                                className="rounded-full cursor-pointer"
+                                alt="profile"
+                                onClick={() => setToggleDropdown(prev => !prev)}
                             />
 
                         {toggleDropdown && (
@@ -86,10 +90,27 @@ const Nav = () => {
                                 <Link 
                                     href='/profile'
                                     className="dropdown_link"
-                                    onClick={() => setToggleDropdown(false)}
+                                    onClick={disableToggle}
                                 >
                                     My Profile
-                                </Link>    
+                                </Link>
+
+                                <Link 
+                                    href='/create-prompt'
+                                    className="dropdown_link"
+                                    onClick={disableToggle}
+                                >
+                                    Create Prompt
+                                </Link>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        disableToggle();
+                                        signOut(); }}
+                                    className="mt-5 w-full black_btn">
+                                        Sign Out
+                                </button>
                             </div>
                             
                         )}
