@@ -14,16 +14,16 @@ export const connectToDB = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
             dbName: 'share_prompt',
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         })
 
         isConnected = true;
 
         console.log('MongoDB connected');
     } catch (error) {
-        console.log(error);
+        console.log('DB ERROR logger', error);
     }
 }
 
-console.log(process.env);
+// console.log('PROCESS.ENV logger', process.env);
