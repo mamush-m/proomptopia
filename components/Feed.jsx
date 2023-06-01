@@ -27,17 +27,15 @@ const Feed = () => {
 
 
   const handleSearchChange = e => {
-    const input = e.target.value;
-    console.log('this is target', input);
+    setSearchText(e.target.value)
 
     const pop = [...posts];
     pop.forEach(post => post.prompt = post.prompt.toLowerCase());
     console.log('BIG', pop);
     
-    const dodo = pop.filter(e => e.prompt.indexOf(input) != -1);
-    console.log('DODO final', dodo);
+    const filteredData = pop.filter(e => e.prompt.indexOf(searchText) != -1 || e.tag.indexOf(searchText) != -1);
 
-    setPosts(dodo);
+    setPosts(filteredData);
   }
 
   useEffect(() => {
@@ -50,9 +48,9 @@ const Feed = () => {
     }
 
     // console.log('ALL POSTS', posts);
-    fetchPosts();
+    if(!searchText) fetchPosts();
     console.log('ALL POSTSsssss', posts);
-  }, [])
+  }, [searchText])
 
   return (
     <section className='feed'>
