@@ -23,10 +23,21 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
+
 
   const handleSearchChange = e => {
+    const input = e.target.value;
+    console.log('this is target', input);
 
+    const pop = [...posts];
+    pop.forEach(post => post.prompt = post.prompt.toLowerCase());
+    console.log('BIG', pop);
+    
+    const dodo = pop.filter(e => e.prompt.indexOf(input) != -1);
+    console.log('DODO final', dodo);
+
+    setPosts(dodo);
   }
 
   useEffect(() => {
@@ -45,11 +56,11 @@ const Feed = () => {
 
   return (
     <section className='feed'>
-      <form className='relative w-full flex flex-center' action="">
+      <form className='relative w-full flex flex-center' >
         <input
           type="text"
           placeholder='Search for a tag or a username'
-          value={searchText}
+          // value={searchText}
           onChange={handleSearchChange}
           required
           className='search_input peer'
